@@ -1,10 +1,18 @@
+require 'csv'
+
 module Api
   class ContactsController < Api::BaseController
-    respond_to :json
+    respond_to :json, :csv
 
     def index
       @contacts = Contact.order(created_at: :desc)
-      respond_with :api, @contacts
+      respond_to do |format|
+        format.json { render json: @contacts }
+        format.csv {
+          headers['Content-Disposition'] = "attachment; filename=\"phonebook\""
+          headers['Content-Type'] ||= 'text/csv'
+        }
+      end
     end
 
     def show
