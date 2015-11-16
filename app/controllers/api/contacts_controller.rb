@@ -16,7 +16,13 @@ module Api
       @contact = Contact.new(contact_params)
       @contact.save
 
-      respond_with @contact
+      respond_with :api, @contact
+    end
+
+    private
+
+    def contact_params
+      params.require(:contact).permit(:name, :phone)
     end
   end
 end
