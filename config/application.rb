@@ -16,10 +16,10 @@ Bundler.require(*Rails.groups)
 
 module Pnbk
   class Application < Rails::Application
-    config.middleware.insert_before 0, "Rack::Cors" do
+    config.middleware.insert_before 0, "Rack::Cors", debug: true, logger: (-> { Rails.logger }) do
       allow do
         origins '*'
-        resource '*', headers: :any, method: [:get, :post, :options]
+        resource '*', headers: :any, method: [:get, :post, :delete, :put, :head, :options]
       end
     end
   end

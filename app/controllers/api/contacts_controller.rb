@@ -4,17 +4,31 @@ module Api
 
     def index
       @contacts = Contact.order(created_at: :desc)
-      respond_with @contacts
+      respond_with :api, @contacts
     end
 
     def show
       @contact = Contact.find(params[:id])
-      respond_with @contact
+      respond_with :api, @contact
     end
 
     def create
       @contact = Contact.new(contact_params)
       @contact.save
+
+      respond_with :api, @contact
+    end
+
+    def update
+      @contact = Contact.find(params[:id])
+      @contact.update_attributes(contact_params)
+
+      respond_with :api, @contact
+    end
+
+    def destroy
+      @contact = Contact.find(params[:id])
+      @contact.destroy
 
       respond_with :api, @contact
     end
