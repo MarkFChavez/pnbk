@@ -3,7 +3,7 @@ module Api
     respond_to :json
 
     def index
-      @contacts = Contact.all
+      @contacts = Contact.order(created_at: :desc)
       respond_with @contacts
     end
 
